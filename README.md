@@ -46,6 +46,13 @@ The `price` column is `NUMERIC` without scale. `NUMERIC(12,2)` rounded very smal
 - **RFM:** reference date 10 Dec 2011. R and M use `NTILE(5)`; F uses fixed bands (1, 2, 3–4, 5–8, 9+) so equal invoice counts get equal scores. Segment thresholds are my own design choice, not a standard.
 - **Cohorts:** a cohort is the month of a customer's first purchase. Dec 2011 cells are removed (incomplete month), and the Dec 2009 cohort includes returning customers.
 
+- ## Power BI Model
+
+ - **Power Query:** loads `online_retail_II.xlsx` through the `p_FilePath` parameter and applies the same cleaning steps as the SQL script. The row counts match at every step.
+- **Data sources:** `rfm_segments.csv` (5,852 rows) and `cohort_retention_final.csv` (300 rows), exported from PostgreSQL.
+- **DAX measures:** Total Sales, Total Customers, Total Invoices, Avg Order Value, RFM Customers, RFM Sales, RFM Customers %, RFM Sales %, Cohort Active, Cohort Size, Retention %, Avg Retention %.
+- **Dashboard:** 7 pages: Overview, Customers, Products, RFM, Cohort, Notes, Insights & Recommendations.
+
 ## How to Run
 
 1. Download the Online Retail II dataset and save it as `raw/online_retail_II.xlsx`. Export the two sheets as `raw_2009_2010.csv` and `raw_2010_2011.csv` in the same folder.
