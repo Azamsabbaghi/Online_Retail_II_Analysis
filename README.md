@@ -28,16 +28,17 @@ The Notes and Insights & Recommendations pages are in the `screenshots` folder.
 
 **Source:** Online Retail II (UK online retailer), Dec 2009 – 9 Dec 2011. December 2011 is a partial month.
 
-| Step | Rule | Note |
+| Step | Rule | Rows removed |
 |---|---|---|
-| Raw data | 1,067,371 rows | `raw_retail` table |
-| Cancelled invoices | Removed invoices with prefix "C" | |
-| Invalid values | Removed rows with Quantity ≤ 0 or Price ≤ 0 | |
-| Duplicates | Removed exact duplicate rows | |
-| Missing Customer ID | Removed (about 22% of rows) | Customer analysis needs an ID, so Total Sales is lower than the raw total |
-| Non-product codes | Removed non-product StockCodes | SP1002 was kept (real product) |
-| Outlier | Excluded invoice 581483 | 80,995 units, $168K, cancelled minutes later |
-| Clean data | 776,578 rows | `retail_clean` table |
+| Raw data | 1,067,371 rows (`raw_retail`) | |
+| Cancelled invoices | Invoice prefix "C" | 19,494 |
+| Quantity | Quantity ≤ 0 | 3,457 |
+| Price | Price ≤ 0 | 2,750 |
+| Duplicates | Exact duplicate rows | 33,757 |
+| Missing Customer ID | Customer analysis needs an ID | 228,488 |
+| Non-product codes | Non-product StockCodes (SP1002 kept, real product) | 2,846 |
+| Outlier | Invoice 581483 (80,995 units, $168K, cancelled minutes later) | 1 |
+| Clean data | 776,578 rows (`retail_clean`) | |
 
 The `price` column is `NUMERIC` without scale. `NUMERIC(12,2)` rounded very small prices to 0.00 and silently dropped 18 rows.
 
@@ -49,8 +50,10 @@ The `price` column is `NUMERIC` without scale. `NUMERIC(12,2)` rounded very smal
 - ## Power BI Model
 
  - **Power Query:** loads `online_retail_II.xlsx` through the `p_FilePath` parameter and applies the same cleaning steps as the SQL script. The row counts match at every step.
+   - **Model:** star schema. `Retail_combined` is the fact table, with `Dim_Customer`, `Dim_Product`, `Dim_Date` and `Dim_Country`. `RFM_Segments` and `Cohort_Retention` come from SQL and stay standalone.
 - **Data sources:** `rfm_segments.csv` (5,852 rows) and `cohort_retention_final.csv` (300 rows), exported from PostgreSQL.
 - **DAX measures:** Total Sales, Total Customers, Total Invoices, Avg Order Value, RFM Customers, RFM Sales, RFM Customers %, RFM Sales %, Cohort Active, Cohort Size, Retention %, Avg Retention %.
+  - **Cleaning checks:** `Audit_Cleaning` stores row counts after each cleaning step, and `Checks_Cleaning` confirms the final data passes four checks (no cancellations, no missing Customer ID, Quantity > 0, Price > 0).
 - **Dashboard:** 7 pages: Overview, Customers, Products, RFM, Cohort, Notes, Insights & Recommendations.
 
 ## How to Run
