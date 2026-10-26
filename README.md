@@ -5,11 +5,12 @@ End-to-end analysis of 2 years of UK online retail transactions (Dec 2009 – 9 
 ## Key Results
 
 - Champions are 21.5% of customers (1,256) but generate 68.4% of sales.
+- Champions and Loyal Customers together generate nearly 79% of sales (68.4% + 10.3%).
 - Hibernating customers are 27.9% of customers but only 4.1% of sales.
-- At Risk customers (710) account for 9.0% of sales (about $1.5M) and last bought about 360 days ago on average.
+- At Risk customers (710) account for 9.0% of sales (about £1.5M) and last bought about 360 days ago on average.
 - About 23% of new customers buy again the month after their first purchase.
-- The UK generates 83.55% of sales ($16.9M total, 36,593 invoices, 5,852 customers).
-
+- Total sales are £16.9M across 36,593 invoices and 5,852 customers.
+- The UK generates 83.55% of sales (about £14.1M).
 ## Dashboard
 
 ![Overview](screenshots/01_overview.png)
@@ -37,7 +38,7 @@ The Notes and Insights & Recommendations pages are in the `screenshots` folder.
 | Duplicates | Exact duplicate rows | 33,757 |
 | Missing Customer ID | Customer analysis needs an ID | 228,488 |
 | Non-product codes | Non-product StockCodes (SP1002 kept, real product) | 2,846 |
-| Outlier | Invoice 581483 (80,995 units, $168K, cancelled minutes later) | 1 |
+| Outlier | Invoice 581483 (80,995 units, £168K, cancelled minutes later) | 1 |
 | Clean data | 776,578 rows (`retail_clean`) | |
 
 The `price` column is `NUMERIC` without scale. `NUMERIC(12,2)` rounded very small prices to 0.00 and silently dropped 18 rows.
